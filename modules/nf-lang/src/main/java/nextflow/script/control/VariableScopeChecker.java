@@ -209,7 +209,8 @@ public class VariableScopeChecker {
                 : null;
         }
 
-        if( includes.get(name) instanceof MethodNode mn )
+        // an included process or workflow can be accessed as a variable (e.g. `FOO.out`)
+        if( includes.get(name) instanceof MethodNode mn && isDataflowMethod(mn) )
             return wrapMethodAsVariable(mn, name);
 
         return null;
